@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Restaurant Billing & Management System">
+  <title>BistroFlow — Restaurant Management</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- App Shell -->
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+            <path d="M7 2v20"/>
+            <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1 class="brand-title" id="header-title">My Restaurant</h1>
+          <span class="brand-tagline">POS & Management</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="main-nav" aria-label="Main Navigation">
+        <button class="nav-item active" data-page="tables" id="nav-tables">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"/>
+            <path d="M3 9h18"/>
+            <path d="M9 21V9"/>
+          </svg>
+          <span class="nav-label">Tables</span>
+        </button>
+
+        <button class="nav-item" data-page="menu" id="nav-menu">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12h20"/>
+            <path d="M20 12v8H4v-8"/>
+            <path d="m4 4 16 0"/>
+            <path d="M4 8h16"/>
+          </svg>
+          <span class="nav-label">Menu</span>
+        </button>
+
+        <button class="nav-item" data-page="reports" id="nav-reports">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" x2="12" y1="20" y2="10"/>
+            <line x1="18" x2="18" y1="20" y2="4"/>
+            <line x1="6" x2="6" y1="20" y2="16"/>
+          </svg>
+          <span class="nav-label">Reports</span>
+        </button>
+
+        <button class="nav-item" data-page="settings" id="nav-settings">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span class="status-text">System Live</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Tables Page -->
+      <section id="page-tables" class="page active">
+        <header class="page-topbar">
+          <div class="topbar-headings">
+            <h2 class="page-title">Table Floor</h2>
+            <p class="page-subtitle">Real-time floor occupancy and seating status</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="btn btn-primary" id="btn-add-table">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              <span>Add Table</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Summary Strip -->
+        <div class="summary-strip" id="tables-summary-strip">
+          <div class="summary-card">
+            <div class="summary-icon icon-free">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <div class="summary-details">
+              <span class="summary-val" id="summary-free-count">0</span>
+              <span class="summary-lbl">Available Tables</span>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-icon icon-occupied">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="summary-details">
+              <span class="summary-val" id="summary-occupied-count">0</span>
+              <span class="summary-lbl">Occupied Tables</span>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-icon icon-orders">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="summary-details">
+              <span class="summary-val" id="summary-open-orders">0</span>
+              <span class="summary-lbl">Active Bills</span>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-icon icon-sales">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="summary-details">
+              <span class="summary-val" id="summary-today-sales">₹0.00</span>
+              <span class="summary-lbl">Today's Sales</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tables Grid -->
+        <div id="tables-grid" class="tables-grid"></div>
+      </section>
+
+      <!-- Order / POS Screen -->
+      <section id="page-order" class="page">
+        <header class="page-topbar">
+          <div class="topbar-headings">
+            <div class="breadcrumbs">
+              <button class="back-link" id="btn-back-tables">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                <span>Floor Map</span>
+              </button>
+            </div>
+            <h2 class="page-title" id="order-title">Table Order</h2>
+            <p class="page-subtitle" id="order-subtitle">Take items, add kitchen notes, and manage billing</p>
+          </div>
+          <div class="topbar-actions">
+            <span class="order-status-badge" id="order-status-badge">Open Order</span>
+          </div>
+        </header>
+
+        <div class="order-layout">
+          <!-- Left: Menu Picker -->
+          <div class="order-menu-panel">
+            <div class="menu-filter-bar">
+              <div class="search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="menu-search" class="input" placeholder="Search dishes, drinks, appetizers..." autocomplete="off">
+              </div>
+            </div>
+
+            <!-- Category Chips -->
+            <div class="category-chips-wrapper" id="order-category-chips"></div>
+
+            <!-- Menu Items Grid -->
+            <div id="order-menu-list" class="order-menu-grid"></div>
+          </div>
+
+          <!-- Right: Order Ticket Panel -->
+          <div class="order-ticket-panel" id="order-ticket-panel">
+            <div class="ticket-header">
+              <div class="ticket-title-row">
+                <h3>Current Ticket</h3>
+                <span class="ticket-item-count" id="ticket-item-count">0 items</span>
+              </div>
+            </div>
+
+            <div id="order-items-list" class="ticket-items-list"></div>
+
+            <!-- Discount Section -->
+            <div class="ticket-discount-box">
+              <label for="discount-input" class="discount-label">Bill Discount (₹)</label>
+              <div class="discount-input-group">
+                <input type="number" id="discount-input" class="input input-sm" min="0" step="1" value="0" placeholder="0">
+                <button class="btn btn-secondary btn-sm" id="btn-apply-discount">Apply</button>
+              </div>
+            </div>
+
+            <!-- Totals Block -->
+            <div id="order-totals" class="ticket-totals"></div>
+
+            <!-- Action Buttons -->
+            <div class="ticket-actions">
+              <button class="btn btn-secondary w-full" id="btn-print-bill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                <span>Print Bill</span>
+              </button>
+              <button class="btn btn-primary w-full" id="btn-take-payment">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                <span>Take Payment</span>
+              </button>
+              <button class="btn btn-danger-soft w-full" id="btn-cancel-order">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                <span>Cancel Order</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Menu Management Page -->
+      <section id="page-menu" class="page">
+        <header class="page-topbar">
+          <div class="topbar-headings">
+            <h2 class="page-title">Menu Management</h2>
+            <p class="page-subtitle">Organize food categories, prices, and live item availability</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="btn btn-secondary" id="btn-add-category">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              <span>New Category</span>
+            </button>
+            <button class="btn btn-primary" id="btn-add-menu-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              <span>Add Dish</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Menu Filter and Search -->
+        <div class="menu-mgmt-toolbar">
+          <div class="search-box">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="mgmt-menu-search" class="input" placeholder="Search dishes across categories..." autocomplete="off">
+          </div>
+          <div class="category-chips-wrapper" id="mgmt-category-chips"></div>
+        </div>
+
+        <div id="menu-management-list" class="menu-mgmt-container"></div>
+      </section>
+
+      <!-- Reports Page -->
+      <section id="page-reports" class="page">
+        <header class="page-topbar">
+          <div class="topbar-headings">
+            <h2 class="page-title">Daily Sales Report</h2>
+            <p class="page-subtitle">Revenue totals, payment settlement breakdown, and top dishes</p>
+          </div>
+          <div class="topbar-actions">
+            <div class="date-picker-group">
+              <label for="report-date" class="sr-only">Report Date</label>
+              <input type="date" id="report-date" class="input input-date">
+              <button class="btn btn-primary" id="btn-load-report">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                <span>Generate</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div id="report-content" class="report-dashboard"></div>
+      </section>
+
+      <!-- Settings Page -->
+      <section id="page-settings" class="page">
+        <header class="page-topbar">
+          <div class="topbar-headings">
+            <h2 class="page-title">Store Settings</h2>
+            <p class="page-subtitle">Restaurant business profile, taxes, and service charges</p>
+          </div>
+        </header>
+
+        <div class="settings-container">
+          <form id="settings-form" class="settings-card-form">
+            <div class="settings-section">
+              <h3 class="section-title">Restaurant Details</h3>
+              <p class="section-desc">Appears on receipt prints and digital summaries</p>
+
+              <div class="form-group">
+                <label for="setting-restaurant-name" class="form-label">Restaurant Name</label>
+                <input type="text" id="setting-restaurant-name" class="input" required placeholder="e.g. The Rustic Spoon">
+                <span class="field-error" id="err-restaurant-name"></span>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3 class="section-title">Taxes & Service Surcharges</h3>
+              <p class="section-desc">Configured percentages automatically calculated on food subtotal</p>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="setting-tax-percent" class="form-label">GST / VAT Tax (%)</label>
+                  <input type="number" id="setting-tax-percent" class="input" min="0" max="100" step="0.01" required placeholder="5">
+                  <span class="field-error" id="err-tax-percent"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="setting-service-charge" class="form-label">Service Charge (%)</label>
+                  <input type="number" id="setting-service-charge" class="input" min="0" max="100" step="0.01" required placeholder="0">
+                  <span class="field-error" id="err-service-charge"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-footer">
+              <button type="submit" class="btn btn-primary" id="btn-save-settings" disabled>Save Changes</button>
+              <div id="settings-msg" class="msg"></div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Accessible Modal Dialog -->
+  <div id="modal-overlay" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card" id="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">Modal</h3>
+        <button class="modal-close-btn" id="modal-close" aria-label="Close dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Print Bill Hidden Container -->
+  <div id="bill-print" class="bill-print"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "restaurant-billing-system",
+  "version": "1.0.0",
+  "description": "Restaurant Billing & Management System",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test tests/app.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "sql.js": "^1.11.0"
+  }
+}
